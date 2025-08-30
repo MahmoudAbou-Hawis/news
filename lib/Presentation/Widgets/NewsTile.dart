@@ -4,16 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class NewsTile extends StatelessWidget {
-  final String imageLink;
+   String ?imageLink;
   final String newTitle;
   final String subTitle;
 
-  const NewsTile({
+   NewsTile({
     super.key,
     required this.imageLink,
     required this.newTitle,
     required this.subTitle,
-  });
+  }){
+    if( imageLink == null || imageLink!.isEmpty){
+        imageLink = "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?q=80&w=2669&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,7 @@ class NewsTile extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: CachedNetworkImage(
-              imageUrl: imageLink,
+              imageUrl: imageLink! ,
               height: 200,
               width: double.infinity,
               fit: BoxFit.fill,

@@ -21,18 +21,27 @@ class BaseApiClient {
     Dio dio = Dio();
     String requestUrl = _buildRequest(options: options,
                                     endPoint: "everything");
-   final response =  await dio.request(requestUrl,options: Options(
-      method: 'GET'
-    ));
-    final articles = (response.data as Map<String, dynamic>)["articles"] as List<dynamic>;
-    final parsedArticles = articles.cast<Map<String, dynamic>>();
+    try{
+      final response =  await dio.request(requestUrl,options: Options(
+          method: 'GET'
+      ));
+      final articles = (response.data as Map<String, dynamic>)["articles"] as List<dynamic>;
+      final parsedArticles = articles.cast<Map<String, dynamic>>();
 
 
 
-    return HttpResponse(
-      response.statusCode == 200 ? HttpStatus.success : HttpStatus.failure,
-      parsedArticles,
-    );
+      return HttpResponse(
+        response.statusCode == 200 ? HttpStatus.success : HttpStatus.failure,
+        parsedArticles,
+      );
+    }catch (_) {
+      return HttpResponse(
+        HttpStatus.failure,
+        [],
+      );
+    }
+
+
 
   }
 
